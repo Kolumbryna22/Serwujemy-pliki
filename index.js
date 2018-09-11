@@ -13,17 +13,16 @@ server.on('request', function (request, response) {
         message = getImg();
         response.statusCode = 404;
     }
-
-    console.log(message);
     
-    response.write(message);
+    response.write(message.toString());
     response.end();
 });
 server.listen(8080);
 
 function getHTML() {
     fs.readFile('./index.html', 'utf-8', function(err, data) {
-        console.log(data);
+        if (err) throw err;
+
         return data;
     });
 };
