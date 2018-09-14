@@ -20,7 +20,7 @@ server.on('request', function (request, response) {
 server.listen(8080);
 
 function getHTML() {
-    fs.readFile('./index.html', 'utf-8', function(err, data) {
+    fs.readFileSync('./index.html', 'utf-8', function(err, data) {
         if (err) throw err;
 
         return data;
@@ -28,7 +28,7 @@ function getHTML() {
 };
 
 function getImg() {
-    fs.stat('./featured_404.jpg', function(err, stats) {
+    fs.statSync('./featured_404.jpg', function(err, stats) {
         if (err) throw err;
 
         return stats;
