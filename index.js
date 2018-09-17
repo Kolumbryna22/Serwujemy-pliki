@@ -26,19 +26,19 @@ server.on('request', function (request, response) {
 server.listen(8080);
 
 function getHTML() {
-    isMessage = true;
     fs.readFile('./index.html', 'utf-8', function(err, data) {
         if (err) throw err;
-
+        isMessage = true;
+        
         return data;
     });
 };
 
 function getImg() {
-    isMessage = true;
     fs.stat('./featured_404.jpg', function(err, stats) {
         if (err) throw err;
-
+        isMessage = true;
+        
         return stats;
     });
 };
