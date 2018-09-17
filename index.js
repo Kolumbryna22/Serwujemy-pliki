@@ -3,34 +3,24 @@ var server = http.createServer();
 var fs = require('fs');
 
 server.on('request', function (request, response) {
-    var message;
-
     response.setHeader('Content-Type', 'text/html; charset=utf-8');
 
     if(request.method === 'GET' && request.url === '/joke') {
-        message = getHTML();
-    } else {
-        message = getImg();
+        fs.readFile('./index.html', 'utf-8', function(err, data) {
+            if (err) throw err;
+    
+            response.write(data.toString());
+            response.end();
+        });
+    } else {    
+        fs.readFile("featured_404.jpg", "binary", function(err, file) {
+            if (err) throw err;
+
+            response.writeHead(200, {"Content-Type": "image/png"});
+            response.write(file, "binary");
+            response.end();
+        });
         response.statusCode = 404;
     }
-    
-    response.write(message.toString());
-    response.end();
 });
 server.listen(8080);
-
-function getHTML() {
-    fs.readFileSync('./index.html', 'utf-8', function(err, data) {
-        if (err) throw err;
-
-        return data;
-    });
-};
-
-function getImg() {
-    fs.statSync('./featured_404.jpg', function(err, stats) {
-        if (err) throw err;
-
-        return stats;
-    });
-};
